@@ -121,11 +121,6 @@ export default function ResumePreview({ data }: Props) {
                     <span className="font-semibold text-slate-900">
                       {proj.name || "프로젝트명"}
                     </span>
-                    {proj.github && (
-                      <span className="text-indigo-500 text-xs">
-                        {proj.github}
-                      </span>
-                    )}
                     {proj.link && (
                       <span className="text-indigo-500 text-xs">{proj.link}</span>
                     )}

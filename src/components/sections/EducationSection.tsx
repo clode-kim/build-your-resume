@@ -13,15 +13,10 @@ export default function EducationSection({ data, onAdd, onUpdate, onDelete }: Pr
   return (
     <div className="space-y-4">
       {data.map((edu) => (
-        <div
-          key={edu.id}
-          className="border border-slate-200 rounded-xl p-4 space-y-3 bg-white"
-        >
+        <div key={edu.id} className="border border-slate-200 rounded-xl p-4 space-y-3 bg-white">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
-                학교명
-              </label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">학교명</label>
               <input
                 className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 placeholder="OO대학교"
@@ -30,22 +25,7 @@ export default function EducationSection({ data, onAdd, onUpdate, onDelete }: Pr
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
-                전공
-              </label>
-              <input
-                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                placeholder="컴퓨터공학과"
-                value={edu.major}
-                onChange={(e) => onUpdate(edu.id, { major: e.target.value })}
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-3 gap-3 items-end">
-            <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
-                학위
-              </label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">학위</label>
               <select
                 className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 value={edu.degree}
@@ -59,23 +39,60 @@ export default function EducationSection({ data, onAdd, onUpdate, onDelete }: Pr
                 <option value="수료">수료</option>
               </select>
             </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
-                입학
-              </label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">전공</label>
+              <input
+                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                placeholder="컴퓨터공학과"
+                value={edu.major}
+                onChange={(e) => onUpdate(edu.id, { major: e.target.value })}
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">부전공 (선택)</label>
+              <input
+                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                placeholder="경영학과"
+                value={edu.minor}
+                onChange={(e) => onUpdate(edu.id, { minor: e.target.value })}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-4 gap-3">
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">학점</label>
+              <input
+                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                placeholder="3.8"
+                value={edu.gpa}
+                onChange={(e) => onUpdate(edu.id, { gpa: e.target.value })}
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">만점</label>
+              <select
+                className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                value={edu.gpaMax}
+                onChange={(e) => onUpdate(edu.id, { gpaMax: e.target.value })}
+              >
+                <option value="4.5">4.5</option>
+                <option value="4.3">4.3</option>
+                <option value="4.0">4.0</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">입학</label>
               <input
                 type="month"
                 className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 value={edu.startDate}
-                onChange={(e) =>
-                  onUpdate(edu.id, { startDate: e.target.value })
-                }
+                onChange={(e) => onUpdate(edu.id, { startDate: e.target.value })}
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
-                졸업
-              </label>
+              <label className="block text-xs font-medium text-slate-500 mb-1">졸업</label>
               <input
                 type="month"
                 className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:bg-slate-100"
@@ -90,16 +107,11 @@ export default function EducationSection({ data, onAdd, onUpdate, onDelete }: Pr
               type="checkbox"
               className="accent-indigo-500"
               checked={edu.current}
-              onChange={(e) =>
-                onUpdate(edu.id, { current: e.target.checked, endDate: "" })
-              }
+              onChange={(e) => onUpdate(edu.id, { current: e.target.checked, endDate: "" })}
             />
             재학 중
           </label>
-          <button
-            onClick={() => onDelete(edu.id)}
-            className="text-xs text-red-400 hover:text-red-600 transition-colors"
-          >
+          <button onClick={() => onDelete(edu.id)} className="text-xs text-red-400 hover:text-red-600 transition-colors">
             삭제
           </button>
         </div>

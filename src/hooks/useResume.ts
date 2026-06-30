@@ -58,7 +58,7 @@ export function useResume() {
   }, [data, save]);
 
   const addProject = useCallback(() => {
-    const item: Project = { id: uuidv4(), name: "", description: "", techStack: [], link: "", github: "", startDate: "", endDate: "" };
+    const item: Project = { id: uuidv4(), name: "", description: "", techStack: [], link: "", startDate: "", endDate: "" };
     save({ ...data, projects: [...data.projects, item] });
     return item.id;
   }, [data, save]);
@@ -86,7 +86,7 @@ export function useResume() {
   }, [data, save]);
 
   const addEducation = useCallback(() => {
-    const item: Education = { id: uuidv4(), school: "", degree: "", major: "", startDate: "", endDate: "", current: false, description: "" };
+    const item: Education = { id: uuidv4(), school: "", degree: "", major: "", minor: "", gpa: "", gpaMax: "4.5", startDate: "", endDate: "", current: false, description: "" };
     save({ ...data, education: [...data.education, item] });
     return item.id;
   }, [data, save]);
@@ -100,7 +100,7 @@ export function useResume() {
   }, [data, save]);
 
   const addCertification = useCallback(() => {
-    const item: Certification = { id: uuidv4(), name: "", issuer: "", date: "", expiry: "" };
+    const item: Certification = { id: uuidv4(), name: "", issuer: "", date: "", expiry: "", certNumber: "" };
     save({ ...data, certifications: [...data.certifications, item] });
     return item.id;
   }, [data, save]);

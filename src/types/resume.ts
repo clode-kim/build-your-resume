@@ -27,7 +27,6 @@ export interface Project {
   description: string;
   techStack: string[];
   link: string;
-  github: string;
   startDate: string;
   endDate: string;
 }
@@ -43,6 +42,9 @@ export interface Education {
   school: string;
   degree: string;
   major: string;
+  minor: string;
+  gpa: string;
+  gpaMax: string;
   startDate: string;
   endDate: string;
   current: boolean;
@@ -55,6 +57,7 @@ export interface Certification {
   issuer: string;
   date: string;
   expiry: string;
+  certNumber: string;
 }
 
 export interface Language {

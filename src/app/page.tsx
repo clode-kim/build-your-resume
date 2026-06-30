@@ -64,7 +64,7 @@ export default function Home() {
       {/* Sidebar */}
       <aside className="w-52 bg-white border-r border-slate-200 flex flex-col shrink-0 no-print">
         <div className="px-5 py-4 border-b border-slate-100">
-          <h1 className="text-sm font-bold text-slate-900">Build Your Resume</h1>
+          <h1 className="text-sm font-bold text-slate-900">Resume</h1>
           <p className="text-xs text-slate-400 mt-0.5">자동 저장됨</p>
         </div>
         <nav className="flex-1 py-3 overflow-y-auto">
