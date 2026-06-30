@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import {
   ResumeData,
   defaultResumeData,
@@ -14,26 +14,31 @@ import {
 } from "@/types/resume";
 import { v4 as uuidv4 } from "uuid";
 
-const STORAGE_KEY = "resume_data";
-
 export function useResume() {
   const [data, setData] = useState<ResumeData>(defaultResumeData);
+  const [loading, setLoading] = useState(true);
+  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        setData({ ...defaultResumeData, ...parsed });
-      } catch {
-        setData(defaultResumeData);
-      }
-    }
+    fetch("/api/resume")
+      .then((r) => r.json())
+      .then((serverData) => {
+        if (serverData) setData({ ...defaultResumeData, ...serverData });
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
 
   const save = useCallback((next: ResumeData) => {
     setData(next);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(() => {
+      fetch("/api/resume", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(next),
+      }).catch(() => {});
+    }, 500);
   }, []);
 
   const updateProfile = useCallback(
@@ -143,6 +148,7 @@ export function useResume() {
 
   return {
     data,
+    loading,
     updateProfile,
     addExperience, updateExperience, deleteExperience,
     addProject, updateProject, deleteProject,
