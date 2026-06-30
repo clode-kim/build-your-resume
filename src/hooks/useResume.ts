@@ -14,32 +14,69 @@ import {
 } from "@/types/resume";
 import { v4 as uuidv4 } from "uuid";
 
+interface ResumeListItem {
+  id: string;
+  updatedAt: string;
+}
+
+interface ResumeDocument {
+  id: string;
+  data: ResumeData;
+}
+
 export function useResume() {
   const [data, setData] = useState<ResumeData>(defaultResumeData);
   const [loading, setLoading] = useState(true);
+  const resumeIdRef = useRef<string | null>(null);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    fetch("/api/resume")
-      .then((r) => r.json())
-      .then((serverData) => {
-        if (serverData) setData({ ...defaultResumeData, ...serverData });
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    (async () => {
+      try {
+        const listRes = await fetch("/api/resumes");
+        const list: ResumeListItem[] = await listRes.json();
+
+        if (list.length > 0) {
+          const detailRes = await fetch(`/api/resumes/${list[0].id}`);
+          const doc: ResumeDocument = await detailRes.json();
+          resumeIdRef.current = doc.id;
+          setData({ ...defaultResumeData, ...doc.data });
+        } else {
+          // 최초 진입 시 빈 이력서 생성
+          const createRes = await fetch("/api/resumes", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ data: defaultResumeData }),
+          });
+          const doc: ResumeDocument = await createRes.json();
+          resumeIdRef.current = doc.id;
+        }
+      } catch {
+        // 네트워크 오류 시 빈 상태로 fallback
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, []);
 
   const save = useCallback((next: ResumeData) => {
     setData(next);
     if (saveTimer.current) clearTimeout(saveTimer.current);
     saveTimer.current = setTimeout(() => {
-      fetch("/api/resume", {
-        method: "PUT",
+      fetch("/api/resumes", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(next),
-      }).catch(() => {});
+        body: JSON.stringify({ id: resumeIdRef.current, data: next }),
+      })
+        .then((r) => r.json())
+        .then((doc: ResumeDocument) => {
+          if (!resumeIdRef.current) resumeIdRef.current = doc.id;
+        })
+        .catch(() => {});
     }, 500);
   }, []);
+
+  // ── 프로필 ────────────────────────────────────────────────────────────────
 
   const updateProfile = useCallback(
     (updates: Partial<ResumeData["profile"]>) => {
@@ -47,6 +84,8 @@ export function useResume() {
     },
     [data, save]
   );
+
+  // ── 경력 ──────────────────────────────────────────────────────────────────
 
   const addExperience = useCallback(() => {
     const item: Experience = { id: uuidv4(), company: "", position: "", startDate: "", endDate: "", current: false, description: "" };
@@ -62,6 +101,8 @@ export function useResume() {
     save({ ...data, experiences: data.experiences.filter((e) => e.id !== id) });
   }, [data, save]);
 
+  // ── 프로젝트 ──────────────────────────────────────────────────────────────
+
   const addProject = useCallback(() => {
     const item: Project = { id: uuidv4(), name: "", description: "", techStack: [], link: "", startDate: "", endDate: "" };
     save({ ...data, projects: [...data.projects, item] });
@@ -75,6 +116,8 @@ export function useResume() {
   const deleteProject = useCallback((id: string) => {
     save({ ...data, projects: data.projects.filter((p) => p.id !== id) });
   }, [data, save]);
+
+  // ── 기술 ──────────────────────────────────────────────────────────────────
 
   const addSkillCategory = useCallback(() => {
     const item: Skill = { id: uuidv4(), category: "", items: [] };
@@ -90,6 +133,8 @@ export function useResume() {
     save({ ...data, skills: data.skills.filter((s) => s.id !== id) });
   }, [data, save]);
 
+  // ── 학력 ──────────────────────────────────────────────────────────────────
+
   const addEducation = useCallback(() => {
     const item: Education = { id: uuidv4(), school: "", degree: "", major: "", minor: "", gpa: "", gpaMax: "4.5", startDate: "", endDate: "", current: false, description: "" };
     save({ ...data, education: [...data.education, item] });
@@ -103,6 +148,8 @@ export function useResume() {
   const deleteEducation = useCallback((id: string) => {
     save({ ...data, education: data.education.filter((e) => e.id !== id) });
   }, [data, save]);
+
+  // ── 자격증 ────────────────────────────────────────────────────────────────
 
   const addCertification = useCallback(() => {
     const item: Certification = { id: uuidv4(), name: "", issuer: "", date: "", expiry: "", certNumber: "" };
@@ -118,6 +165,8 @@ export function useResume() {
     save({ ...data, certifications: data.certifications.filter((c) => c.id !== id) });
   }, [data, save]);
 
+  // ── 어학 ──────────────────────────────────────────────────────────────────
+
   const addLanguage = useCallback(() => {
     const item: Language = { id: uuidv4(), language: "", level: "", test: "", score: "" };
     save({ ...data, languages: [...data.languages, item] });
@@ -131,6 +180,8 @@ export function useResume() {
   const deleteLanguage = useCallback((id: string) => {
     save({ ...data, languages: data.languages.filter((l) => l.id !== id) });
   }, [data, save]);
+
+  // ── 교육수강 ──────────────────────────────────────────────────────────────
 
   const addTraining = useCallback(() => {
     const item: Training = { id: uuidv4(), name: "", institution: "", startDate: "", endDate: "", description: "" };
