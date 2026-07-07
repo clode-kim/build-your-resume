@@ -106,7 +106,7 @@ export function useResume() {
   // ── 프로젝트 ──────────────────────────────────────────────────────────────
 
   const addProject = useCallback(() => {
-    const item: Project = { id: uuidv4(), name: "", description: "", techStack: [], link: "", startDate: "", endDate: "" };
+    const item: Project = { id: uuidv4(), name: "", description: "", techStack: [], link: "", startDate: "", endDate: "", architectureImage: "" };
     save({ ...data, projects: [...data.projects, item] });
     return item.id;
   }, [data, save]);

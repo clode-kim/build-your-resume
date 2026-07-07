@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Project } from "@/types/resume";
 
 interface Props {
@@ -19,7 +19,17 @@ function ProjectCard({ proj, onUpdate, onDelete }: {
   const [isEditing, setIsEditing] = useState(isEmpty);
   const [draft, setDraft] = useState<Project>(proj);
   const [techInput, setTechInput] = useState("");
+  const imageInputRef = useRef<HTMLInputElement>(null);
   const set = (u: Partial<Project>) => setDraft((p) => ({ ...p, ...u }));
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => set({ architectureImage: ev.target?.result as string });
+    reader.readAsDataURL(file);
+    e.target.value = "";
+  };
 
   const handleTechKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" || e.key === ",") {
@@ -35,30 +45,39 @@ function ProjectCard({ proj, onUpdate, onDelete }: {
 
   if (!isEditing) {
     return (
-      <div className="border border-slate-200 rounded-xl p-4 bg-white">
-        <div className="flex justify-between items-start">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-baseline gap-2 flex-wrap">
-              <span className="font-semibold text-slate-800">{proj.name || "프로젝트명 없음"}</span>
-              {proj.link && <span className="text-xs text-blue-500">{proj.link}</span>}
-              {proj.startDate && (
-                <span className="text-xs text-slate-400">
-                  {proj.startDate.replace("-", ".")} — {proj.endDate ? proj.endDate.replace("-", ".") : "진행 중"}
-                </span>
-              )}
-            </div>
-            {proj.techStack.length > 0 && (
-              <div className="flex flex-wrap gap-1 mt-1.5">
-                {proj.techStack.map((t) => (
-                  <span key={t} className="px-2 py-0.5 bg-blue-50 text-blue-600 text-xs rounded-full">{t}</span>
-                ))}
+      <div className="border border-slate-200 rounded-xl overflow-hidden bg-white">
+        {proj.architectureImage && (
+          <img
+            src={proj.architectureImage}
+            alt="아키텍처"
+            className="w-full object-contain max-h-64 bg-slate-50 border-b border-slate-100"
+          />
+        )}
+        <div className="p-4">
+          <div className="flex justify-between items-start">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-baseline gap-2 flex-wrap">
+                <span className="font-semibold text-slate-800">{proj.name || "프로젝트명 없음"}</span>
+                {proj.link && <span className="text-xs text-blue-500">{proj.link}</span>}
+                {proj.startDate && (
+                  <span className="text-xs text-slate-400">
+                    {proj.startDate.replace("-", ".")} — {proj.endDate ? proj.endDate.replace("-", ".") : "진행 중"}
+                  </span>
+                )}
               </div>
-            )}
-            {proj.description && <p className="text-sm text-slate-500 mt-1.5 line-clamp-2">{proj.description}</p>}
-          </div>
-          <div className="flex gap-2 ml-3 shrink-0">
-            <button onClick={() => { setDraft(proj); setIsEditing(true); }} className="text-xs text-blue-500 hover:text-blue-700 font-medium">수정</button>
-            <button onClick={() => onDelete(proj.id)} className="text-xs text-red-400 hover:text-red-600">삭제</button>
+              {proj.techStack.length > 0 && (
+                <div className="flex flex-wrap gap-1 mt-1.5">
+                  {proj.techStack.map((t) => (
+                    <span key={t} className="px-2 py-0.5 bg-blue-50 text-blue-600 text-xs rounded-full">{t}</span>
+                  ))}
+                </div>
+              )}
+              {proj.description && <p className="text-sm text-slate-500 mt-1.5 line-clamp-2">{proj.description}</p>}
+            </div>
+            <div className="flex gap-2 ml-3 shrink-0">
+              <button onClick={() => { setDraft(proj); setIsEditing(true); }} className="text-xs text-blue-500 hover:text-blue-700 font-medium">수정</button>
+              <button onClick={() => onDelete(proj.id)} className="text-xs text-red-400 hover:text-red-600">삭제</button>
+            </div>
           </div>
         </div>
       </div>
@@ -97,6 +116,30 @@ function ProjectCard({ proj, onUpdate, onDelete }: {
           ))}
         </div>
         <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white" placeholder="React, TypeScript, ..." value={techInput} onChange={(e) => setTechInput(e.target.value)} onKeyDown={handleTechKeyDown} />
+      </div>
+      <div>
+        <label className="block text-xs font-medium text-slate-500 mb-1">아키텍처 이미지 (선택)</label>
+        <input ref={imageInputRef} type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
+        {draft.architectureImage ? (
+          <div className="relative group">
+            <img
+              src={draft.architectureImage}
+              alt="아키텍처"
+              className="w-full object-contain max-h-48 rounded-lg border border-slate-200 bg-slate-50"
+            />
+            <button
+              onClick={() => set({ architectureImage: "" })}
+              className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+            >×</button>
+          </div>
+        ) : (
+          <div
+            onClick={() => imageInputRef.current?.click()}
+            className="border-2 border-dashed border-slate-200 rounded-lg p-4 text-center text-slate-400 text-sm cursor-pointer hover:border-blue-300 hover:text-blue-400 transition-colors"
+          >
+            클릭해서 아키텍처 이미지 업로드
+          </div>
+        )}
       </div>
       <div>
         <label className="block text-xs font-medium text-slate-500 mb-1">설명</label>

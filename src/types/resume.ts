@@ -29,6 +29,7 @@ export interface Project {
   link: string;
   startDate: string;
   endDate: string;
+  architectureImage: string;  // base64 data URL
 }
 
 export interface Skill {

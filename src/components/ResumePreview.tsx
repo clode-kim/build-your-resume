@@ -143,6 +143,13 @@ export default function ResumePreview({ data }: Props) {
                     ))}
                   </div>
                 )}
+                {proj.architectureImage && (
+                  <img
+                    src={proj.architectureImage}
+                    alt="아키텍처"
+                    className="mt-2 w-full object-contain rounded border border-slate-100"
+                  />
+                )}
                 {proj.description && (
                   <p className="mt-1 text-slate-600 whitespace-pre-line">
                     {proj.description}
