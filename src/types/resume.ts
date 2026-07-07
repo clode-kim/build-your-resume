@@ -82,6 +82,14 @@ export interface Training {
   description: string;
 }
 
+export interface Award {
+  id: string;
+  title: string;
+  organization: string;
+  date: string;        // YYYY-MM-DD
+  description: string;
+}
+
 export type JobStatus =
   | "planned"
   | "applied"
@@ -157,6 +165,7 @@ export interface ResumeData {
   certifications: Certification[];
   languages: Language[];
   trainings: Training[];
+  awards: Award[];
   jobApplications: JobApplication[];
   coverLetterBank: CoverLetterItem[];
 }
@@ -181,6 +190,7 @@ export const defaultResumeData: ResumeData = {
   certifications: [],
   languages: [],
   trainings: [],
+  awards: [],
   jobApplications: [],
   coverLetterBank: [],
 };

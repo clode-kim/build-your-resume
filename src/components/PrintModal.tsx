@@ -18,6 +18,7 @@ interface Selection {
   certifications: string[];
   languages: string[];
   trainings: string[];
+  awards: string[];
 }
 
 function initSelection(data: ResumeData): Selection {
@@ -30,6 +31,7 @@ function initSelection(data: ResumeData): Selection {
     certifications: data.certifications.map((c) => c.id),
     languages: data.languages.map((l) => l.id),
     trainings: data.trainings.map((t) => t.id),
+    awards: (data.awards ?? []).map((a) => a.id),
   };
 }
 
@@ -77,6 +79,12 @@ const LIST_SECTIONS: { key: ListKey; label: string; icon: string; getLabel: (ite
     label: "교육수강",
     icon: "📚",
     getLabel: (t) => [t.name, t.institution].filter(Boolean).join(" · ") || "교육",
+  },
+  {
+    key: "awards",
+    label: "수상경력",
+    icon: "🏆",
+    getLabel: (a) => [a.title, a.organization].filter(Boolean).join(" · ") || "수상",
   },
 ];
 
@@ -131,6 +139,7 @@ export default function PrintModal({ data, onConfirm, onClose }: Props) {
       certifications: [],
       languages: [],
       trainings: [],
+      awards: [],
     });
   };
 
@@ -147,6 +156,7 @@ export default function PrintModal({ data, onConfirm, onClose }: Props) {
       certifications: data.certifications.filter((c) => sel.certifications.includes(c.id)),
       languages: data.languages.filter((l) => sel.languages.includes(l.id)),
       trainings: data.trainings.filter((t) => sel.trainings.includes(t.id)),
+      awards: (data.awards ?? []).filter((a) => sel.awards.includes(a.id)),
       jobApplications: [],
       coverLetterBank: [],
     };
@@ -161,7 +171,8 @@ export default function PrintModal({ data, onConfirm, onClose }: Props) {
     sel.education.length +
     sel.certifications.length +
     sel.languages.length +
-    sel.trainings.length;
+    sel.trainings.length +
+    sel.awards.length;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">

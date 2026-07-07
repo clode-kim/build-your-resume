@@ -13,6 +13,7 @@ import {
   Training,
   JobApplication,
   CoverLetterItem,
+  Award,
 } from "@/types/resume";
 import { v4 as uuidv4 } from "uuid";
 
@@ -199,6 +200,22 @@ export function useResume() {
     save({ ...data, trainings: data.trainings.filter((t) => t.id !== id) });
   }, [data, save]);
 
+  // ── 수상경력 ──────────────────────────────────────────────────────────────
+
+  const addAward = useCallback(() => {
+    const item: Award = { id: uuidv4(), title: "", organization: "", date: "", description: "" };
+    save({ ...data, awards: [...(data.awards ?? []), item] });
+    return item.id;
+  }, [data, save]);
+
+  const updateAward = useCallback((id: string, updates: Partial<Award>) => {
+    save({ ...data, awards: (data.awards ?? []).map((a) => a.id === id ? { ...a, ...updates } : a) });
+  }, [data, save]);
+
+  const deleteAward = useCallback((id: string) => {
+    save({ ...data, awards: (data.awards ?? []).filter((a) => a.id !== id) });
+  }, [data, save]);
+
   // ── 채용 공고 ──────────────────────────────────────────────────────────────
 
   const addJobApplication = useCallback(() => {
@@ -245,6 +262,7 @@ export function useResume() {
     addCertification, updateCertification, deleteCertification,
     addLanguage, updateLanguage, deleteLanguage,
     addTraining, updateTraining, deleteTraining,
+    addAward, updateAward, deleteAward,
     addJobApplication, updateJobApplication, deleteJobApplication,
     addCoverLetterItem, updateCoverLetterItem, deleteCoverLetterItem,
   };

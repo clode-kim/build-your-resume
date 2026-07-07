@@ -12,6 +12,7 @@ import EducationSection from "@/components/sections/EducationSection";
 import CertificationSection from "@/components/sections/CertificationSection";
 import LanguageSection from "@/components/sections/LanguageSection";
 import TrainingSection from "@/components/sections/TrainingSection";
+import AwardSection from "@/components/sections/AwardSection";
 import JobApplicationSection from "@/components/sections/JobApplicationSection";
 import CoverLetterSection from "@/components/sections/CoverLetterSection";
 import ResumePreview from "@/components/ResumePreview";
@@ -26,6 +27,7 @@ type SectionKey =
   | "certifications"
   | "languages"
   | "trainings"
+  | "awards"
   | "jobApplications"
   | "coverLetterBank";
 
@@ -38,6 +40,7 @@ const SECTIONS: { key: SectionKey; label: string; icon: string }[] = [
   { key: "certifications", label: "자격증", icon: "📜" },
   { key: "languages", label: "어학", icon: "🌐" },
   { key: "trainings", label: "교육수강", icon: "📚" },
+  { key: "awards", label: "수상경력", icon: "🏆" },
   { key: "jobApplications", label: "채용 공고", icon: "📋" },
   { key: "coverLetterBank", label: "자기소개서", icon: "✍️" },
 ];
@@ -112,6 +115,8 @@ export default function Home() {
         return <LanguageSection data={resume.data.languages} onAdd={resume.addLanguage} onUpdate={resume.updateLanguage} onDelete={resume.deleteLanguage} />;
       case "trainings":
         return <TrainingSection data={resume.data.trainings} onAdd={resume.addTraining} onUpdate={resume.updateTraining} onDelete={resume.deleteTraining} />;
+      case "awards":
+        return <AwardSection data={resume.data.awards ?? []} onAdd={resume.addAward} onUpdate={resume.updateAward} onDelete={resume.deleteAward} />;
       case "jobApplications":
         return <JobApplicationSection data={resume.data.jobApplications ?? []} onAdd={resume.addJobApplication} onUpdate={resume.updateJobApplication} onDelete={resume.deleteJobApplication} />;
       case "coverLetterBank":

@@ -36,7 +36,7 @@ function DateRange({
 }
 
 export default function ResumePreview({ data }: Props) {
-  const { profile, experiences, projects, skills, education, certifications, languages, trainings } = data;
+  const { profile, experiences, projects, skills, education, certifications, languages, trainings, awards } = data;
 
   return (
     <div className="bg-white text-slate-800 p-8 shadow-sm text-[13px] leading-relaxed min-h-full" style={{ fontFamily: '"Pretendard Variable", Pretendard, sans-serif' }}>
@@ -250,6 +250,24 @@ export default function ResumePreview({ data }: Props) {
                     {[lang.test, lang.score].filter(Boolean).join(" ")}
                   </span>
                 )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Awards */}
+      {awards && awards.length > 0 && (
+        <section className="mb-5">
+          <h2 className="text-sm font-bold uppercase tracking-widest text-blue-600 mb-3">수상경력</h2>
+          <div className="space-y-2">
+            {awards.map((award) => (
+              <div key={award.id} className="flex justify-between items-baseline">
+                <div>
+                  <span className="font-semibold text-slate-900">{award.title}</span>
+                  {award.organization && <span className="text-slate-500 ml-2">{award.organization}</span>}
+                </div>
+                {award.date && <span className="text-slate-400 text-xs shrink-0 ml-2">{formatMonth(award.date)}</span>}
               </div>
             ))}
           </div>
