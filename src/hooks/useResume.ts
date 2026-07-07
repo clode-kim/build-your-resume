@@ -12,6 +12,7 @@ import {
   Language,
   Training,
   JobApplication,
+  CoverLetterItem,
 } from "@/types/resume";
 import { v4 as uuidv4 } from "uuid";
 
@@ -217,6 +218,22 @@ export function useResume() {
     save({ ...data, jobApplications: (data.jobApplications ?? []).filter((j) => j.id !== id) });
   }, [data, save]);
 
+  // ── 자기소개서 ────────────────────────────────────────────────────────────
+
+  const addCoverLetterItem = useCallback(() => {
+    const item: CoverLetterItem = { id: uuidv4(), question: "", answer: "", category: "" };
+    save({ ...data, coverLetterBank: [...(data.coverLetterBank ?? []), item] });
+    return item.id;
+  }, [data, save]);
+
+  const updateCoverLetterItem = useCallback((id: string, updates: Partial<CoverLetterItem>) => {
+    save({ ...data, coverLetterBank: (data.coverLetterBank ?? []).map((c) => c.id === id ? { ...c, ...updates } : c) });
+  }, [data, save]);
+
+  const deleteCoverLetterItem = useCallback((id: string) => {
+    save({ ...data, coverLetterBank: (data.coverLetterBank ?? []).filter((c) => c.id !== id) });
+  }, [data, save]);
+
   return {
     data,
     loading,
@@ -229,5 +246,6 @@ export function useResume() {
     addLanguage, updateLanguage, deleteLanguage,
     addTraining, updateTraining, deleteTraining,
     addJobApplication, updateJobApplication, deleteJobApplication,
+    addCoverLetterItem, updateCoverLetterItem, deleteCoverLetterItem,
   };
 }

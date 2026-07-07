@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { ResumeData } from "@/types/resume";
@@ -85,11 +85,11 @@ function Checkbox({ checked, onChange, label, bold }: { checked: boolean; onChan
     <label className="flex items-center gap-2.5 cursor-pointer group">
       <input
         type="checkbox"
-        className="w-4 h-4 rounded border-slate-300 accent-indigo-600 cursor-pointer"
+        className="w-4 h-4 rounded border-slate-300 accent-blue-600 cursor-pointer"
         checked={checked}
         onChange={onChange}
       />
-      <span className={`text-sm select-none ${bold ? "font-semibold text-slate-800" : "text-slate-600"} group-hover:text-indigo-700 transition-colors`}>
+      <span className={`text-sm select-none ${bold ? "font-semibold text-slate-800" : "text-slate-600"} group-hover:text-blue-700 transition-colors`}>
         {label}
       </span>
     </label>
@@ -148,6 +148,7 @@ export default function PrintModal({ data, onConfirm, onClose }: Props) {
       languages: data.languages.filter((l) => sel.languages.includes(l.id)),
       trainings: data.trainings.filter((t) => sel.trainings.includes(t.id)),
       jobApplications: [],
+      coverLetterBank: [],
     };
     onConfirm(filtered);
   };
@@ -180,7 +181,7 @@ export default function PrintModal({ data, onConfirm, onClose }: Props) {
 
         {/* 전체 선택/해제 */}
         <div className="flex gap-2 px-5 py-2.5 border-b border-slate-100 shrink-0">
-          <button onClick={selectAll} className="text-xs text-indigo-600 hover:text-indigo-800 font-medium transition-colors">전체 선택</button>
+          <button onClick={selectAll} className="text-xs text-blue-600 hover:text-blue-800 font-medium transition-colors">전체 선택</button>
           <span className="text-slate-200">|</span>
           <button onClick={deselectAll} className="text-xs text-slate-400 hover:text-slate-600 font-medium transition-colors">전체 해제</button>
         </div>
@@ -209,7 +210,7 @@ export default function PrintModal({ data, onConfirm, onClose }: Props) {
                   <div className="flex items-center gap-2">
                     <input
                       type="checkbox"
-                      className="w-4 h-4 rounded border-slate-300 accent-indigo-600 cursor-pointer"
+                      className="w-4 h-4 rounded border-slate-300 accent-blue-600 cursor-pointer"
                       checked={allSelected}
                       ref={(el) => {
                         if (el) {
@@ -254,7 +255,7 @@ export default function PrintModal({ data, onConfirm, onClose }: Props) {
             <button
               onClick={handleConfirm}
               disabled={totalSelected === 0}
-              className="text-xs px-4 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700 disabled:bg-slate-200 disabled:text-slate-400 transition-colors"
+              className="text-xs px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:bg-slate-200 disabled:text-slate-400 transition-colors"
             >
               PDF 저장
             </button>

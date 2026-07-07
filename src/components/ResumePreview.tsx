@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { ResumeData } from "@/types/resume";
 
@@ -75,7 +75,7 @@ export default function ResumePreview({ data }: Props) {
       {/* Experience */}
       {experiences.length > 0 && (
         <section className="mb-5">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-3">
+          <h2 className="text-sm font-bold uppercase tracking-widest text-blue-600 mb-3">
             경력
           </h2>
           <div className="space-y-4">
@@ -110,7 +110,7 @@ export default function ResumePreview({ data }: Props) {
       {/* Projects */}
       {projects.length > 0 && (
         <section className="mb-5">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-3">
+          <h2 className="text-sm font-bold uppercase tracking-widest text-blue-600 mb-3">
             프로젝트
           </h2>
           <div className="space-y-4">
@@ -122,7 +122,7 @@ export default function ResumePreview({ data }: Props) {
                       {proj.name || "프로젝트명"}
                     </span>
                     {proj.link && (
-                      <span className="text-indigo-500 text-xs">{proj.link}</span>
+                      <span className="text-blue-500 text-xs">{proj.link}</span>
                     )}
                   </div>
                   <DateRange
@@ -136,7 +136,7 @@ export default function ResumePreview({ data }: Props) {
                     {proj.techStack.map((t) => (
                       <span
                         key={t}
-                        className="px-1.5 py-0.5 bg-indigo-50 text-indigo-600 rounded text-[11px]"
+                        className="px-1.5 py-0.5 bg-blue-50 text-blue-600 rounded text-[11px]"
                       >
                         {t}
                       </span>
@@ -157,7 +157,7 @@ export default function ResumePreview({ data }: Props) {
       {/* Skills */}
       {skills.length > 0 && (
         <section className="mb-5">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-3">
+          <h2 className="text-sm font-bold uppercase tracking-widest text-blue-600 mb-3">
             기술
           </h2>
           <div className="space-y-1.5">
@@ -180,7 +180,7 @@ export default function ResumePreview({ data }: Props) {
       {/* Education */}
       {education.length > 0 && (
         <section className="mb-5">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-3">
+          <h2 className="text-sm font-bold uppercase tracking-widest text-blue-600 mb-3">
             학력
           </h2>
           <div className="space-y-3">
@@ -212,7 +212,7 @@ export default function ResumePreview({ data }: Props) {
       {/* Certifications */}
       {certifications.length > 0 && (
         <section className="mb-5">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-3">자격증</h2>
+          <h2 className="text-sm font-bold uppercase tracking-widest text-blue-600 mb-3">자격증</h2>
           <div className="space-y-1.5">
             {certifications.map((cert) => (
               <div key={cert.id} className="flex justify-between items-baseline">
@@ -232,7 +232,7 @@ export default function ResumePreview({ data }: Props) {
       {/* Languages */}
       {languages.length > 0 && (
         <section className="mb-5">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-3">어학</h2>
+          <h2 className="text-sm font-bold uppercase tracking-widest text-blue-600 mb-3">어학</h2>
           <div className="space-y-1.5">
             {languages.map((lang) => (
               <div key={lang.id} className="flex items-baseline gap-3">
@@ -252,7 +252,7 @@ export default function ResumePreview({ data }: Props) {
       {/* Trainings */}
       {trainings.length > 0 && (
         <section className="mb-5">
-          <h2 className="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-3">교육수강</h2>
+          <h2 className="text-sm font-bold uppercase tracking-widest text-blue-600 mb-3">교육수강</h2>
           <div className="space-y-3">
             {trainings.map((tr) => (
               <div key={tr.id}>

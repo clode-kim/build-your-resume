@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -95,16 +95,16 @@ function JobDetail({
       </div>
 
       {/* 기본 정보 */}
-      <div className="border-2 border-indigo-200 rounded-xl p-4 bg-indigo-50/30 space-y-3">
+      <div className="border-2 border-blue-200 rounded-xl p-4 bg-blue-50/30 space-y-3">
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">회사명</label>
-            <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white"
+            <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
               placeholder="카카오" value={draft.company} onChange={(e) => set({ company: e.target.value })} />
           </div>
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">포지션</label>
-            <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white"
+            <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
               placeholder="프론트엔드 개발자" value={draft.position} onChange={(e) => set({ position: e.target.value })} />
           </div>
         </div>
@@ -119,8 +119,8 @@ function JobDetail({
                 onClick={() => set({ applicationType: value })}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
                   draft.applicationType === value
-                    ? "bg-indigo-600 text-white border-indigo-600"
-                    : "bg-white text-slate-500 border-slate-200 hover:border-indigo-300"
+                    ? "bg-blue-600 text-white border-blue-600"
+                    : "bg-white text-slate-500 border-slate-200 hover:border-blue-300"
                 }`}
               >
                 {label}
@@ -132,12 +132,12 @@ function JobDetail({
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">마감일</label>
-            <input type="date" className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white"
+            <input type="date" className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
               value={draft.deadline} onChange={(e) => set({ deadline: e.target.value })} />
           </div>
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">상태</label>
-            <select className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white"
+            <select className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
               value={draft.status} onChange={(e) => set({ status: e.target.value as JobStatus })}>
               {(Object.keys(JOB_STATUS_LABEL) as JobStatus[]).map((s) => (
                 <option key={s} value={s}>{JOB_STATUS_LABEL[s]}</option>
@@ -148,7 +148,7 @@ function JobDetail({
 
         <div>
           <label className="block text-xs font-medium text-slate-500 mb-1">공고 URL</label>
-          <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white"
+          <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
             placeholder="https://..." value={draft.url} onChange={(e) => set({ url: e.target.value })} />
         </div>
       </div>
@@ -157,7 +157,7 @@ function JobDetail({
       <div>
         <label className="block text-xs font-medium text-slate-500 mb-2">자기소개서</label>
         <textarea
-          className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"
+          className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
           rows={8}
           placeholder="자기소개서 내용을 작성하세요..."
           value={draft.coverLetter}
@@ -171,7 +171,7 @@ function JobDetail({
 
         {/* JD 텍스트 */}
         <textarea
-          className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none mb-3"
+          className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none mb-3"
           rows={6}
           placeholder="채용 공고 내용을 붙여넣으세요..."
           value={draft.jdText}
@@ -182,7 +182,7 @@ function JobDetail({
         <div className="flex items-center justify-between mb-2">
           <span className="text-xs text-slate-400">이미지로도 첨부 가능</span>
           <button onClick={() => imageInputRef.current?.click()}
-            className="text-xs text-indigo-600 hover:text-indigo-800 font-medium">+ 이미지 추가</button>
+            className="text-xs text-blue-600 hover:text-blue-800 font-medium">+ 이미지 추가</button>
         </div>
         <input ref={imageInputRef} type="file" accept="image/*" multiple className="hidden" onChange={handleImageAdd} />
         {draft.jdImages.length > 0 ? (
@@ -200,7 +200,7 @@ function JobDetail({
         ) : (
           <div
             onClick={() => imageInputRef.current?.click()}
-            className="border-2 border-dashed border-slate-200 rounded-xl p-4 text-center text-slate-400 text-sm cursor-pointer hover:border-indigo-300 hover:text-indigo-400 transition-colors"
+            className="border-2 border-dashed border-slate-200 rounded-xl p-4 text-center text-slate-400 text-sm cursor-pointer hover:border-blue-300 hover:text-blue-400 transition-colors"
           >
             클릭해서 JD 이미지 업로드
           </div>
@@ -212,7 +212,7 @@ function JobDetail({
         <div className="flex items-center justify-between mb-2">
           <label className="text-xs font-medium text-slate-500">첨부파일 (지원서 등)</label>
           <button onClick={() => fileInputRef.current?.click()}
-            className="text-xs text-indigo-600 hover:text-indigo-800 font-medium">+ 파일 추가</button>
+            className="text-xs text-blue-600 hover:text-blue-800 font-medium">+ 파일 추가</button>
         </div>
         <input ref={fileInputRef} type="file" multiple className="hidden" onChange={handleFileAdd} />
         {draft.attachments.length > 0 ? (
@@ -223,7 +223,7 @@ function JobDetail({
                   <svg className="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                   </svg>
-                  <a href={att.data} download={att.name} className="text-sm text-slate-700 hover:text-indigo-600 truncate">{att.name}</a>
+                  <a href={att.data} download={att.name} className="text-sm text-slate-700 hover:text-blue-600 truncate">{att.name}</a>
                 </div>
                 <button onClick={() => set({ attachments: draft.attachments.filter((a) => a.id !== att.id) })}
                   className="text-xs text-red-400 hover:text-red-600 shrink-0 ml-2">삭제</button>
@@ -233,7 +233,7 @@ function JobDetail({
         ) : (
           <div
             onClick={() => fileInputRef.current?.click()}
-            className="border-2 border-dashed border-slate-200 rounded-xl p-4 text-center text-slate-400 text-sm cursor-pointer hover:border-indigo-300 hover:text-indigo-400 transition-colors"
+            className="border-2 border-dashed border-slate-200 rounded-xl p-4 text-center text-slate-400 text-sm cursor-pointer hover:border-blue-300 hover:text-blue-400 transition-colors"
           >
             클릭해서 파일 첨부 (PDF, Word 등)
           </div>
@@ -244,7 +244,7 @@ function JobDetail({
       <div>
         <label className="block text-xs font-medium text-slate-500 mb-1">메모</label>
         <textarea
-          className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"
+          className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
           rows={3}
           placeholder="인터뷰 후기, 연락 일정 등..."
           value={draft.notes}
@@ -257,7 +257,7 @@ function JobDetail({
         <button
           onClick={() => onUpdate(draft)}
           className={`text-xs px-4 py-2 rounded-lg font-medium transition-colors ${
-            isDirty ? "bg-indigo-600 text-white hover:bg-indigo-700" : "bg-slate-100 text-slate-400 cursor-default"
+            isDirty ? "bg-blue-600 text-white hover:bg-blue-700" : "bg-slate-100 text-slate-400 cursor-default"
           }`}
         >
           저장
@@ -297,7 +297,7 @@ export default function JobApplicationSection({ data, onAdd, onUpdate, onDelete 
         return (
           <div
             key={job.id}
-            className="border border-slate-200 rounded-xl p-4 bg-white hover:border-indigo-200 transition-colors cursor-pointer"
+            className="border border-slate-200 rounded-xl p-4 bg-white hover:border-blue-200 transition-colors cursor-pointer"
             onClick={() => setSelectedId(job.id)}
           >
             <div className="flex items-start justify-between gap-3">
@@ -330,7 +330,7 @@ export default function JobApplicationSection({ data, onAdd, onUpdate, onDelete 
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="text-xs text-indigo-500 hover:text-indigo-700 underline"
+                      className="text-xs text-blue-500 hover:text-blue-700 underline"
                     >
                       공고 보기
                     </a>
@@ -349,7 +349,7 @@ export default function JobApplicationSection({ data, onAdd, onUpdate, onDelete 
       })}
       <button
         onClick={onAdd}
-        className="w-full py-2.5 border-2 border-dashed border-slate-300 rounded-xl text-sm text-slate-500 hover:border-indigo-400 hover:text-indigo-500 transition-colors"
+        className="w-full py-2.5 border-2 border-dashed border-slate-300 rounded-xl text-sm text-slate-500 hover:border-blue-400 hover:text-blue-500 transition-colors"
       >
         + 채용 공고 추가
       </button>

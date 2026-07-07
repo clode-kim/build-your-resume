@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 
@@ -32,7 +32,7 @@ export default function SaveButton({ onSave, isDirty = true }: Props) {
       onClick={handleClick}
       className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-colors ${
         isDirty
-          ? "bg-indigo-600 text-white hover:bg-indigo-700"
+          ? "bg-blue-600 text-white hover:bg-blue-700"
           : "bg-slate-100 text-slate-400 cursor-default"
       }`}
     >

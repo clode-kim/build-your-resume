@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRef, useState, useEffect } from "react";
 import { Profile } from "@/types/resume";
@@ -34,7 +34,7 @@ export default function ProfileSection({ data, onChange }: Props) {
       <label className="block text-xs font-medium text-slate-500 mb-1">{label}</label>
       {key === "summary" ? (
         <textarea
-          className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"
+          className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
           rows={4}
           placeholder={placeholder}
           value={draft[key]}
@@ -43,7 +43,7 @@ export default function ProfileSection({ data, onChange }: Props) {
       ) : (
         <input
           type={type}
-          className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
           placeholder={placeholder}
           value={draft[key]}
           onChange={(e) => update({ [key]: e.target.value })}
@@ -58,7 +58,7 @@ export default function ProfileSection({ data, onChange }: Props) {
       <div className="flex items-center gap-4">
         <div
           onClick={() => fileInputRef.current?.click()}
-          className="w-20 h-20 rounded-full border-2 border-dashed border-slate-300 flex items-center justify-center overflow-hidden cursor-pointer hover:border-indigo-400 transition-colors shrink-0"
+          className="w-20 h-20 rounded-full border-2 border-dashed border-slate-300 flex items-center justify-center overflow-hidden cursor-pointer hover:border-blue-400 transition-colors shrink-0"
         >
           {draft.photo ? (
             <img src={draft.photo} alt="프로필" className="w-full h-full object-cover" />
@@ -69,7 +69,7 @@ export default function ProfileSection({ data, onChange }: Props) {
           )}
         </div>
         <div>
-          <button onClick={() => fileInputRef.current?.click()} className="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+          <button onClick={() => fileInputRef.current?.click()} className="text-sm text-blue-600 hover:text-blue-800 font-medium">
             사진 업로드
           </button>
           {draft.photo && (
@@ -105,7 +105,7 @@ export default function ProfileSection({ data, onChange }: Props) {
           onClick={handleSave}
           className={`text-xs px-4 py-2 rounded-lg font-medium transition-colors ${
             isDirty
-              ? "bg-indigo-600 text-white hover:bg-indigo-700"
+              ? "bg-blue-600 text-white hover:bg-blue-700"
               : "bg-slate-100 text-slate-400 cursor-default"
           }`}
         >

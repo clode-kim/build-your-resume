@@ -136,6 +136,13 @@ export const JOB_STATUS_COLOR: Record<JobStatus, string> = {
   rejected:        "bg-red-100 text-red-600",
 };
 
+export interface CoverLetterItem {
+  id: string;
+  question: string;
+  answer: string;
+  category: string;
+}
+
 export interface ResumeData {
   profile: Profile;
   experiences: Experience[];
@@ -146,6 +153,7 @@ export interface ResumeData {
   languages: Language[];
   trainings: Training[];
   jobApplications: JobApplication[];
+  coverLetterBank: CoverLetterItem[];
 }
 
 export const defaultResumeData: ResumeData = {
@@ -169,4 +177,5 @@ export const defaultResumeData: ResumeData = {
   languages: [],
   trainings: [],
   jobApplications: [],
+  coverLetterBank: [],
 };

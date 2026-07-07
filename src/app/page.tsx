@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useCallback } from "react";
 import { useResume } from "@/hooks/useResume";
@@ -13,6 +13,7 @@ import CertificationSection from "@/components/sections/CertificationSection";
 import LanguageSection from "@/components/sections/LanguageSection";
 import TrainingSection from "@/components/sections/TrainingSection";
 import JobApplicationSection from "@/components/sections/JobApplicationSection";
+import CoverLetterSection from "@/components/sections/CoverLetterSection";
 import ResumePreview from "@/components/ResumePreview";
 import PrintModal from "@/components/PrintModal";
 
@@ -25,7 +26,8 @@ type SectionKey =
   | "certifications"
   | "languages"
   | "trainings"
-  | "jobApplications";
+  | "jobApplications"
+  | "coverLetterBank";
 
 const SECTIONS: { key: SectionKey; label: string; icon: string }[] = [
   { key: "profile", label: "기본 정보", icon: "👤" },
@@ -37,6 +39,7 @@ const SECTIONS: { key: SectionKey; label: string; icon: string }[] = [
   { key: "languages", label: "어학", icon: "🌐" },
   { key: "trainings", label: "교육수강", icon: "📚" },
   { key: "jobApplications", label: "채용 공고", icon: "📋" },
+  { key: "coverLetterBank", label: "자기소개서", icon: "✍️" },
 ];
 
 export default function Home() {
@@ -68,8 +71,8 @@ export default function Home() {
     return (
       <div className="flex h-screen items-center justify-center bg-slate-100">
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-10 flex flex-col items-center gap-5 w-80">
-          <div className="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center">
-            <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center">
+            <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
           </div>
@@ -111,6 +114,8 @@ export default function Home() {
         return <TrainingSection data={resume.data.trainings} onAdd={resume.addTraining} onUpdate={resume.updateTraining} onDelete={resume.deleteTraining} />;
       case "jobApplications":
         return <JobApplicationSection data={resume.data.jobApplications ?? []} onAdd={resume.addJobApplication} onUpdate={resume.updateJobApplication} onDelete={resume.deleteJobApplication} />;
+      case "coverLetterBank":
+        return <CoverLetterSection data={resume.data.coverLetterBank ?? []} onAdd={resume.addCoverLetterItem} onUpdate={resume.updateCoverLetterItem} onDelete={resume.deleteCoverLetterItem} />;
     }
   };
 
@@ -135,7 +140,7 @@ export default function Home() {
               onClick={() => setActiveSection(key)}
               className={`w-full flex items-center gap-3 px-5 py-2.5 text-sm transition-colors ${
                 activeSection === key
-                  ? "bg-indigo-50 text-indigo-700 font-medium"
+                  ? "bg-blue-50 text-blue-700 font-medium"
                   : "text-slate-600 hover:bg-slate-50"
               }`}
             >
@@ -147,7 +152,7 @@ export default function Home() {
         <div className="p-4 border-t border-slate-100 space-y-2">
           <button
             onClick={() => setShowPrintModal(true)}
-            className="w-full py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition-colors"
+            className="w-full py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
           >
             PDF 저장
           </button>
@@ -165,13 +170,13 @@ export default function Home() {
         <div className="flex-1 overflow-y-auto no-print">
           <div className="p-6 max-w-2xl mx-auto">
             <div className="flex items-center justify-between mb-5">
-              <h2 className="text-base font-semibold text-slate-800">
+              <h2 className="text-xl font-bold text-slate-900">
                 {SECTIONS.find((s) => s.key === activeSection)?.label}
               </h2>
               {!showPreview && (
                 <button
                   onClick={() => setShowPreview(true)}
-                  className="text-xs text-indigo-600 hover:text-indigo-800 border border-indigo-200 px-3 py-1.5 rounded-lg transition-colors"
+                  className="text-xs text-blue-600 hover:text-blue-800 border border-blue-200 px-3 py-1.5 rounded-lg transition-colors"
                 >
                   미리보기 열기
                 </button>

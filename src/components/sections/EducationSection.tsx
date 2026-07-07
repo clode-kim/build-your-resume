@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { Education } from "@/types/resume";
@@ -51,7 +51,7 @@ function EducationCard({ edu, onUpdate, onDelete }: {
             )}
           </div>
           <div className="flex gap-2 ml-3 shrink-0">
-            <button onClick={() => { setDraft(edu); setIsEditing(true); }} className="text-xs text-indigo-500 hover:text-indigo-700 font-medium">수정</button>
+            <button onClick={() => { setDraft(edu); setIsEditing(true); }} className="text-xs text-blue-500 hover:text-blue-700 font-medium">수정</button>
             <button onClick={() => onDelete(edu.id)} className="text-xs text-red-400 hover:text-red-600">삭제</button>
           </div>
         </div>
@@ -60,15 +60,15 @@ function EducationCard({ edu, onUpdate, onDelete }: {
   }
 
   return (
-    <div className="border-2 border-indigo-200 rounded-xl p-4 bg-indigo-50/30 space-y-3">
+    <div className="border-2 border-blue-200 rounded-xl p-4 bg-blue-50/30 space-y-3">
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="block text-xs font-medium text-slate-500 mb-1">학교명</label>
-          <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" placeholder="OO대학교" value={draft.school} onChange={(e) => set({ school: e.target.value })} />
+          <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white" placeholder="OO대학교" value={draft.school} onChange={(e) => set({ school: e.target.value })} />
         </div>
         <div>
           <label className="block text-xs font-medium text-slate-500 mb-1">학위</label>
-          <select className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" value={draft.degree} onChange={(e) => set({ degree: e.target.value })}>
+          <select className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white" value={draft.degree} onChange={(e) => set({ degree: e.target.value })}>
             <option value="">선택</option>
             <option value="학사">학사</option>
             <option value="석사">석사</option>
@@ -81,21 +81,21 @@ function EducationCard({ edu, onUpdate, onDelete }: {
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="block text-xs font-medium text-slate-500 mb-1">전공</label>
-          <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" placeholder="컴퓨터공학과" value={draft.major} onChange={(e) => set({ major: e.target.value })} />
+          <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white" placeholder="컴퓨터공학과" value={draft.major} onChange={(e) => set({ major: e.target.value })} />
         </div>
         <div>
           <label className="block text-xs font-medium text-slate-500 mb-1">부전공 (선택)</label>
-          <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" placeholder="경영학과" value={draft.minor} onChange={(e) => set({ minor: e.target.value })} />
+          <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white" placeholder="경영학과" value={draft.minor} onChange={(e) => set({ minor: e.target.value })} />
         </div>
       </div>
       <div className="grid grid-cols-4 gap-3">
         <div>
           <label className="block text-xs font-medium text-slate-500 mb-1">학점</label>
-          <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" placeholder="3.8" value={draft.gpa} onChange={(e) => set({ gpa: e.target.value })} />
+          <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white" placeholder="3.8" value={draft.gpa} onChange={(e) => set({ gpa: e.target.value })} />
         </div>
         <div>
           <label className="block text-xs font-medium text-slate-500 mb-1">만점</label>
-          <select className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" value={draft.gpaMax} onChange={(e) => set({ gpaMax: e.target.value })}>
+          <select className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white" value={draft.gpaMax} onChange={(e) => set({ gpaMax: e.target.value })}>
             <option value="4.5">4.5</option>
             <option value="4.3">4.3</option>
             <option value="4.0">4.0</option>
@@ -103,20 +103,20 @@ function EducationCard({ edu, onUpdate, onDelete }: {
         </div>
         <div>
           <label className="block text-xs font-medium text-slate-500 mb-1">입학</label>
-          <input type="month" className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" value={draft.startDate} onChange={(e) => set({ startDate: e.target.value })} />
+          <input type="month" className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white" value={draft.startDate} onChange={(e) => set({ startDate: e.target.value })} />
         </div>
         <div>
           <label className="block text-xs font-medium text-slate-500 mb-1">졸업</label>
-          <input type="month" className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white disabled:bg-slate-100" value={draft.endDate} disabled={draft.current} onChange={(e) => set({ endDate: e.target.value })} />
+          <input type="month" className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white disabled:bg-slate-100" value={draft.endDate} disabled={draft.current} onChange={(e) => set({ endDate: e.target.value })} />
         </div>
       </div>
       <label className="flex items-center gap-2 text-sm text-slate-600">
-        <input type="checkbox" className="accent-indigo-500" checked={draft.current} onChange={(e) => set({ current: e.target.checked, endDate: "" })} />
+        <input type="checkbox" className="accent-blue-500" checked={draft.current} onChange={(e) => set({ current: e.target.checked, endDate: "" })} />
         재학 중
       </label>
       <div className="flex justify-end gap-2">
         <button onClick={handleCancel} className="text-xs px-3 py-1.5 rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-100 transition-colors">취소</button>
-        <button onClick={handleSave} className="text-xs px-3 py-1.5 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors font-medium">저장</button>
+        <button onClick={handleSave} className="text-xs px-3 py-1.5 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors font-medium">저장</button>
       </div>
     </div>
   );
@@ -126,7 +126,7 @@ export default function EducationSection({ data, onAdd, onUpdate, onDelete }: Pr
   return (
     <div className="space-y-3">
       {data.map((edu) => <EducationCard key={edu.id} edu={edu} onUpdate={onUpdate} onDelete={onDelete} />)}
-      <button onClick={onAdd} className="w-full py-2.5 border-2 border-dashed border-slate-300 rounded-xl text-sm text-slate-500 hover:border-indigo-400 hover:text-indigo-500 transition-colors">
+      <button onClick={onAdd} className="w-full py-2.5 border-2 border-dashed border-slate-300 rounded-xl text-sm text-slate-500 hover:border-blue-400 hover:text-blue-500 transition-colors">
         + 학력 추가
       </button>
     </div>
