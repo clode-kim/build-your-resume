@@ -56,9 +56,11 @@ export interface Certification {
   id: string;
   name: string;
   issuer: string;
-  date: string;
-  expiry: string;
+  date: string;      // YYYY-MM-DD
+  expiry: string;    // YYYY-MM-DD
   certNumber: string;
+  certFile: string;      // base64 data URL
+  certFileName: string;
 }
 
 export interface Language {
@@ -67,6 +69,8 @@ export interface Language {
   level: string;
   test: string;
   score: string;
+  examDate: string;    // YYYY-MM-DD
+  examNumber: string;
 }
 
 export interface Training {

@@ -154,7 +154,7 @@ export function useResume() {
   // ── 자격증 ────────────────────────────────────────────────────────────────
 
   const addCertification = useCallback(() => {
-    const item: Certification = { id: uuidv4(), name: "", issuer: "", date: "", expiry: "", certNumber: "" };
+    const item: Certification = { id: uuidv4(), name: "", issuer: "", date: "", expiry: "", certNumber: "", certFile: "", certFileName: "" };
     save({ ...data, certifications: [...data.certifications, item] });
     return item.id;
   }, [data, save]);
@@ -170,7 +170,7 @@ export function useResume() {
   // ── 어학 ──────────────────────────────────────────────────────────────────
 
   const addLanguage = useCallback(() => {
-    const item: Language = { id: uuidv4(), language: "", level: "", test: "", score: "" };
+    const item: Language = { id: uuidv4(), language: "", level: "", test: "", score: "", examDate: "", examNumber: "" };
     save({ ...data, languages: [...data.languages, item] });
     return item.id;
   }, [data, save]);

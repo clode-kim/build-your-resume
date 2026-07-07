@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { Language } from "@/types/resume";
@@ -37,6 +37,13 @@ function LanguageCard({ lang, onUpdate, onDelete }: {
                 <span className="text-xs text-slate-400">{[lang.test, lang.score].filter(Boolean).join(" ")}</span>
               )}
             </div>
+            {(lang.examDate || lang.examNumber) && (
+              <p className="text-xs text-slate-400 mt-1">
+                {lang.examDate && `시험일: ${lang.examDate}`}
+                {lang.examDate && lang.examNumber && " · "}
+                {lang.examNumber && `수험번호: ${lang.examNumber}`}
+              </p>
+            )}
           </div>
           <div className="flex gap-2 ml-3 shrink-0">
             <button onClick={() => { setDraft(lang); setIsEditing(true); }} className="text-xs text-blue-500 hover:text-blue-700 font-medium">수정</button>
@@ -70,6 +77,16 @@ function LanguageCard({ lang, onUpdate, onDelete }: {
         <div>
           <label className="block text-xs font-medium text-slate-500 mb-1">점수/등급 (선택)</label>
           <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white" placeholder="900, 7.5, N2..." value={draft.score} onChange={(e) => set({ score: e.target.value })} />
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <label className="block text-xs font-medium text-slate-500 mb-1">시험 일자 (선택)</label>
+          <input type="date" className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white" value={draft.examDate} onChange={(e) => set({ examDate: e.target.value })} />
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-slate-500 mb-1">수험번호 (선택)</label>
+          <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white" placeholder="12345678" value={draft.examNumber} onChange={(e) => set({ examNumber: e.target.value })} />
         </div>
       </div>
       <div className="flex justify-end gap-2">
