@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useResume } from "@/hooks/useResume";
 import { useAuth } from "@/hooks/useAuth";
+import { ResumeData } from "@/types/resume";
 import ProfileSection from "@/components/sections/ProfileSection";
 import ExperienceSection from "@/components/sections/ExperienceSection";
 import ProjectSection from "@/components/sections/ProjectSection";
@@ -13,6 +14,7 @@ import LanguageSection from "@/components/sections/LanguageSection";
 import TrainingSection from "@/components/sections/TrainingSection";
 import JobApplicationSection from "@/components/sections/JobApplicationSection";
 import ResumePreview from "@/components/ResumePreview";
+import PrintModal from "@/components/PrintModal";
 
 type SectionKey =
   | "profile"
@@ -40,8 +42,19 @@ const SECTIONS: { key: SectionKey; label: string; icon: string }[] = [
 export default function Home() {
   const [activeSection, setActiveSection] = useState<SectionKey>("profile");
   const [showPreview, setShowPreview] = useState(true);
+  const [showPrintModal, setShowPrintModal] = useState(false);
+  const [printData, setPrintData] = useState<ResumeData | null>(null);
   const { user, loading: authLoading } = useAuth();
   const resume = useResume();
+
+  const handlePrint = useCallback((filtered: ResumeData) => {
+    setShowPrintModal(false);
+    setPrintData(filtered);
+    setTimeout(() => {
+      window.print();
+      setTimeout(() => setPrintData(null), 300);
+    }, 50);
+  }, []);
 
   if (authLoading) {
     return (
@@ -102,7 +115,13 @@ export default function Home() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-100">
+    <>
+    {/* 인쇄 전용 영역 — 화면에서는 숨김, 출력 시에만 표시 */}
+    <div className="print-only">
+      {printData && <ResumePreview data={printData} />}
+    </div>
+
+    <div className="flex h-screen overflow-hidden bg-slate-100 no-print">
       {/* Sidebar */}
       <aside className="w-52 bg-white border-r border-slate-200 flex flex-col shrink-0 no-print">
         <div className="px-5 py-4 border-b border-slate-100">
@@ -127,7 +146,7 @@ export default function Home() {
         </nav>
         <div className="p-4 border-t border-slate-100 space-y-2">
           <button
-            onClick={() => window.print()}
+            onClick={() => setShowPrintModal(true)}
             className="w-full py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition-colors"
           >
             PDF 저장
@@ -188,5 +207,14 @@ export default function Home() {
         </div>
       </main>
     </div>
+
+    {showPrintModal && (
+      <PrintModal
+        data={resume.data}
+        onConfirm={handlePrint}
+        onClose={() => setShowPrintModal(false)}
+      />
+    )}
+    </>
   );
 }
