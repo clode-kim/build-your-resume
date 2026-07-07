@@ -77,7 +77,18 @@ export interface Training {
   description: string;
 }
 
-export type JobStatus = "planned" | "applied" | "interview" | "offered" | "rejected";
+export type JobStatus =
+  | "planned"
+  | "applied"
+  | "doc_passed"
+  | "aptitude"
+  | "interview1"
+  | "interview2"
+  | "final_interview"
+  | "offered"
+  | "rejected";
+
+export type ApplicationType = "entry" | "career" | "";
 
 export interface JobAttachment {
   id: string;
@@ -90,29 +101,39 @@ export interface JobApplication {
   id: string;
   company: string;
   position: string;
+  applicationType: ApplicationType;
   url: string;
   deadline: string;          // YYYY-MM-DD
   status: JobStatus;
   coverLetter: string;
+  jdText: string;
   jdImages: string[];        // base64 data URLs
   attachments: JobAttachment[];
   notes: string;
 }
 
 export const JOB_STATUS_LABEL: Record<JobStatus, string> = {
-  planned:   "지원 예정",
-  applied:   "지원 완료",
-  interview: "면접",
-  offered:   "합격",
-  rejected:  "불합격",
+  planned:         "지원 예정",
+  applied:         "지원 완료",
+  doc_passed:      "서류 합격",
+  aptitude:        "인성·적성검사",
+  interview1:      "1차 면접",
+  interview2:      "2차 면접",
+  final_interview: "최종 면접",
+  offered:         "최종 합격",
+  rejected:        "불합격",
 };
 
 export const JOB_STATUS_COLOR: Record<JobStatus, string> = {
-  planned:   "bg-slate-100 text-slate-600",
-  applied:   "bg-blue-100 text-blue-700",
-  interview: "bg-yellow-100 text-yellow-700",
-  offered:   "bg-green-100 text-green-700",
-  rejected:  "bg-red-100 text-red-600",
+  planned:         "bg-slate-100 text-slate-600",
+  applied:         "bg-blue-100 text-blue-700",
+  doc_passed:      "bg-cyan-100 text-cyan-700",
+  aptitude:        "bg-purple-100 text-purple-700",
+  interview1:      "bg-yellow-100 text-yellow-700",
+  interview2:      "bg-amber-100 text-amber-700",
+  final_interview: "bg-orange-100 text-orange-700",
+  offered:         "bg-green-100 text-green-700",
+  rejected:        "bg-red-100 text-red-600",
 };
 
 export interface ResumeData {

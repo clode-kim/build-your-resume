@@ -202,8 +202,8 @@ export function useResume() {
 
   const addJobApplication = useCallback(() => {
     const item: JobApplication = {
-      id: uuidv4(), company: "", position: "", url: "", deadline: "",
-      status: "planned", coverLetter: "", jdImages: [], attachments: [], notes: "",
+      id: uuidv4(), company: "", position: "", applicationType: "", url: "", deadline: "",
+      status: "planned", coverLetter: "", jdText: "", jdImages: [], attachments: [], notes: "",
     };
     save({ ...data, jobApplications: [...(data.jobApplications ?? []), item] });
     return item.id;

@@ -6,6 +6,7 @@ import {
   JobApplication,
   JobAttachment,
   JobStatus,
+  ApplicationType,
   JOB_STATUS_LABEL,
   JOB_STATUS_COLOR,
 } from "@/types/resume";
@@ -26,6 +27,12 @@ function getDday(deadline: string): { label: string; color: string } {
   if (diff <= 7) return { label: `D-${diff}`, color: "text-orange-500" };
   return { label: `D-${diff}`, color: "text-slate-500" };
 }
+
+const APPLICATION_TYPE_OPTIONS: { value: ApplicationType; label: string }[] = [
+  { value: "", label: "미선택" },
+  { value: "entry", label: "신입" },
+  { value: "career", label: "경력" },
+];
 
 // ── 상세 뷰 ────────────────────────────────────────────────────────────────
 
@@ -49,7 +56,7 @@ function JobDetail({
     files.forEach((file) => {
       const reader = new FileReader();
       reader.onload = (ev) =>
-        set({ jdImages: [...draft.jdImages, ev.target?.result as string] });
+        setDraft((p) => ({ ...p, jdImages: [...p.jdImages, ev.target?.result as string] }));
       reader.readAsDataURL(file);
     });
     e.target.value = "";
@@ -66,14 +73,12 @@ function JobDetail({
           data: ev.target?.result as string,
           mimeType: file.type,
         };
-        set({ attachments: [...draft.attachments, att] });
+        setDraft((p) => ({ ...p, attachments: [...p.attachments, att] }));
       };
       reader.readAsDataURL(file);
     });
     e.target.value = "";
   };
-
-  const handleSave = () => onUpdate(draft);
 
   return (
     <div className="space-y-5">
@@ -103,6 +108,27 @@ function JobDetail({
               placeholder="프론트엔드 개발자" value={draft.position} onChange={(e) => set({ position: e.target.value })} />
           </div>
         </div>
+
+        {/* 신입/경력 토글 */}
+        <div>
+          <label className="block text-xs font-medium text-slate-500 mb-1.5">지원 유형</label>
+          <div className="flex gap-2">
+            {APPLICATION_TYPE_OPTIONS.map(({ value, label }) => (
+              <button
+                key={value}
+                onClick={() => set({ applicationType: value })}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
+                  draft.applicationType === value
+                    ? "bg-indigo-600 text-white border-indigo-600"
+                    : "bg-white text-slate-500 border-slate-200 hover:border-indigo-300"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="block text-xs font-medium text-slate-500 mb-1">마감일</label>
@@ -119,6 +145,7 @@ function JobDetail({
             </select>
           </div>
         </div>
+
         <div>
           <label className="block text-xs font-medium text-slate-500 mb-1">공고 URL</label>
           <input className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white"
@@ -138,10 +165,22 @@ function JobDetail({
         />
       </div>
 
-      {/* JD 이미지 */}
+      {/* JD */}
       <div>
+        <label className="block text-xs font-medium text-slate-500 mb-2">채용 공고 (JD)</label>
+
+        {/* JD 텍스트 */}
+        <textarea
+          className="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none mb-3"
+          rows={6}
+          placeholder="채용 공고 내용을 붙여넣으세요..."
+          value={draft.jdText}
+          onChange={(e) => set({ jdText: e.target.value })}
+        />
+
+        {/* JD 이미지 */}
         <div className="flex items-center justify-between mb-2">
-          <label className="text-xs font-medium text-slate-500">JD 이미지</label>
+          <span className="text-xs text-slate-400">이미지로도 첨부 가능</span>
           <button onClick={() => imageInputRef.current?.click()}
             className="text-xs text-indigo-600 hover:text-indigo-800 font-medium">+ 이미지 추가</button>
         </div>
@@ -161,7 +200,7 @@ function JobDetail({
         ) : (
           <div
             onClick={() => imageInputRef.current?.click()}
-            className="border-2 border-dashed border-slate-200 rounded-xl p-6 text-center text-slate-400 text-sm cursor-pointer hover:border-indigo-300 hover:text-indigo-400 transition-colors"
+            className="border-2 border-dashed border-slate-200 rounded-xl p-4 text-center text-slate-400 text-sm cursor-pointer hover:border-indigo-300 hover:text-indigo-400 transition-colors"
           >
             클릭해서 JD 이미지 업로드
           </div>
@@ -216,7 +255,7 @@ function JobDetail({
       {/* 저장 */}
       <div className="flex justify-end">
         <button
-          onClick={handleSave}
+          onClick={() => onUpdate(draft)}
           className={`text-xs px-4 py-2 rounded-lg font-medium transition-colors ${
             isDirty ? "bg-indigo-600 text-white hover:bg-indigo-700" : "bg-slate-100 text-slate-400 cursor-default"
           }`}
@@ -229,6 +268,12 @@ function JobDetail({
 }
 
 // ── 목록 뷰 ────────────────────────────────────────────────────────────────
+
+const APP_TYPE_LABEL: Record<ApplicationType, string> = {
+  "":       "",
+  entry:    "신입",
+  career:   "경력",
+};
 
 export default function JobApplicationSection({ data, onAdd, onUpdate, onDelete }: Props) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -263,6 +308,11 @@ export default function JobApplicationSection({ data, onAdd, onUpdate, onDelete 
                   </span>
                   {job.position && (
                     <span className="text-slate-500 text-sm">{job.position}</span>
+                  )}
+                  {job.applicationType && (
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 font-medium">
+                      {APP_TYPE_LABEL[job.applicationType]}
+                    </span>
                   )}
                   <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${JOB_STATUS_COLOR[job.status]}`}>
                     {JOB_STATUS_LABEL[job.status]}
