@@ -77,6 +77,44 @@ export interface Training {
   description: string;
 }
 
+export type JobStatus = "planned" | "applied" | "interview" | "offered" | "rejected";
+
+export interface JobAttachment {
+  id: string;
+  name: string;
+  data: string;   // base64
+  mimeType: string;
+}
+
+export interface JobApplication {
+  id: string;
+  company: string;
+  position: string;
+  url: string;
+  deadline: string;          // YYYY-MM-DD
+  status: JobStatus;
+  coverLetter: string;
+  jdImages: string[];        // base64 data URLs
+  attachments: JobAttachment[];
+  notes: string;
+}
+
+export const JOB_STATUS_LABEL: Record<JobStatus, string> = {
+  planned:   "지원 예정",
+  applied:   "지원 완료",
+  interview: "면접",
+  offered:   "합격",
+  rejected:  "불합격",
+};
+
+export const JOB_STATUS_COLOR: Record<JobStatus, string> = {
+  planned:   "bg-slate-100 text-slate-600",
+  applied:   "bg-blue-100 text-blue-700",
+  interview: "bg-yellow-100 text-yellow-700",
+  offered:   "bg-green-100 text-green-700",
+  rejected:  "bg-red-100 text-red-600",
+};
+
 export interface ResumeData {
   profile: Profile;
   experiences: Experience[];
@@ -86,6 +124,7 @@ export interface ResumeData {
   certifications: Certification[];
   languages: Language[];
   trainings: Training[];
+  jobApplications: JobApplication[];
 }
 
 export const defaultResumeData: ResumeData = {
@@ -108,4 +147,5 @@ export const defaultResumeData: ResumeData = {
   certifications: [],
   languages: [],
   trainings: [],
+  jobApplications: [],
 };

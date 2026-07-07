@@ -11,6 +11,7 @@ import {
   Certification,
   Language,
   Training,
+  JobApplication,
 } from "@/types/resume";
 import { v4 as uuidv4 } from "uuid";
 
@@ -197,6 +198,25 @@ export function useResume() {
     save({ ...data, trainings: data.trainings.filter((t) => t.id !== id) });
   }, [data, save]);
 
+  // ── 채용 공고 ──────────────────────────────────────────────────────────────
+
+  const addJobApplication = useCallback(() => {
+    const item: JobApplication = {
+      id: uuidv4(), company: "", position: "", url: "", deadline: "",
+      status: "planned", coverLetter: "", jdImages: [], attachments: [], notes: "",
+    };
+    save({ ...data, jobApplications: [...(data.jobApplications ?? []), item] });
+    return item.id;
+  }, [data, save]);
+
+  const updateJobApplication = useCallback((id: string, updates: Partial<JobApplication>) => {
+    save({ ...data, jobApplications: (data.jobApplications ?? []).map((j) => j.id === id ? { ...j, ...updates } : j) });
+  }, [data, save]);
+
+  const deleteJobApplication = useCallback((id: string) => {
+    save({ ...data, jobApplications: (data.jobApplications ?? []).filter((j) => j.id !== id) });
+  }, [data, save]);
+
   return {
     data,
     loading,
@@ -208,5 +228,6 @@ export function useResume() {
     addCertification, updateCertification, deleteCertification,
     addLanguage, updateLanguage, deleteLanguage,
     addTraining, updateTraining, deleteTraining,
+    addJobApplication, updateJobApplication, deleteJobApplication,
   };
 }

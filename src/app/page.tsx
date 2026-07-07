@@ -11,6 +11,7 @@ import EducationSection from "@/components/sections/EducationSection";
 import CertificationSection from "@/components/sections/CertificationSection";
 import LanguageSection from "@/components/sections/LanguageSection";
 import TrainingSection from "@/components/sections/TrainingSection";
+import JobApplicationSection from "@/components/sections/JobApplicationSection";
 import ResumePreview from "@/components/ResumePreview";
 
 type SectionKey =
@@ -21,7 +22,8 @@ type SectionKey =
   | "education"
   | "certifications"
   | "languages"
-  | "trainings";
+  | "trainings"
+  | "jobApplications";
 
 const SECTIONS: { key: SectionKey; label: string; icon: string }[] = [
   { key: "profile", label: "기본 정보", icon: "👤" },
@@ -32,6 +34,7 @@ const SECTIONS: { key: SectionKey; label: string; icon: string }[] = [
   { key: "certifications", label: "자격증", icon: "📜" },
   { key: "languages", label: "어학", icon: "🌐" },
   { key: "trainings", label: "교육수강", icon: "📚" },
+  { key: "jobApplications", label: "채용 공고", icon: "📋" },
 ];
 
 export default function Home() {
@@ -93,6 +96,8 @@ export default function Home() {
         return <LanguageSection data={resume.data.languages} onAdd={resume.addLanguage} onUpdate={resume.updateLanguage} onDelete={resume.deleteLanguage} />;
       case "trainings":
         return <TrainingSection data={resume.data.trainings} onAdd={resume.addTraining} onUpdate={resume.updateTraining} onDelete={resume.deleteTraining} />;
+      case "jobApplications":
+        return <JobApplicationSection data={resume.data.jobApplications ?? []} onAdd={resume.addJobApplication} onUpdate={resume.updateJobApplication} onDelete={resume.deleteJobApplication} />;
     }
   };
 
