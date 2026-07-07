@@ -39,7 +39,7 @@ export default function ResumePreview({ data }: Props) {
   const { profile, experiences, projects, skills, education, certifications, languages, trainings } = data;
 
   return (
-    <div className="bg-white text-slate-800 p-8 shadow-sm font-sans text-[13px] leading-relaxed min-h-full">
+    <div className="bg-white text-slate-800 p-8 shadow-sm text-[13px] leading-relaxed min-h-full" style={{ fontFamily: '"Pretendard Variable", Pretendard, sans-serif' }}>
       {/* Header */}
       {profile.name && (
         <div className="mb-6 pb-5 border-b border-slate-200 flex gap-4 items-start">
